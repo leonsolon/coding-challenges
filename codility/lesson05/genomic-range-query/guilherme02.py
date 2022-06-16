@@ -1,4 +1,4 @@
-def solution1(S, P, Q): # O**2 - 100% em Correctness - 0% em Performance
+def solution1(S, P, Q): # O(N**2) - 100% em Correctness - 0% em Performance
     retorno = []
     for i,p in enumerate(P):
         usefull_S = S[p:Q[i]+1]
