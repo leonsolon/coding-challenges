@@ -1,4 +1,5 @@
-'''
+def solution(A):
+    '''
         A non-empty array A consisting of N integers is given. The array contains an odd number of elements, and each element of the array can be paired with another element that has the same value, except for one element that is left unpaired.
 
         For example, in array A such that:
@@ -29,15 +30,16 @@
         each element of array A is an integer within the range [1..1,000,000,000];
         all but one of the values in A occur an even number of times.
     '''
-def solution(A):
-    if len(A) == 1:
-        return A[0]
 
-    A = sorted(A)
+    A_ordenado = sorted(A)
+    index_list = range(0,len(A_ordenado),2)
+    for i in index_list:
+        if 1+i <= len(A_ordenado) -1:
+            if A_ordenado[i] != A_ordenado[i+1]:
+                # print(f'index: {i} - item: {A_ordenado[i]}')
+                return A_ordenado[i]
+        else:
+            return A_ordenado[len(A_ordenado)-1]
 
-    for i, a in enumerate(A):
-        if i % 2 == 0:
-            if i + 1 < len(A) and a != A[i + 1]:
-                return a
-    else:
-        return A[-1]
+A = [9, 3, 9, 3, 7, 7, 9]
+print(solution(A))

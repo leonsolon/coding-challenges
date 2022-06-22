@@ -16,13 +16,29 @@ def solution(N):
 
         N is an integer within the range [1..2,147,483,647].
     '''
-    bin_N = bin(N)[2:]
-    gaps = bin_N.split('1')
-    gaps = gaps[1:-1]
-    if len(gaps) == 0:
-        return 0
+    if isinstance(N, int):
+        bin_N = bin(N)
+        # print(bin_N)
+        str_bin_N = str(bin_N)[2:]
+        # print(str_bin_N)
+        max_binary_gap = 0
+        atual_binary_gap = 0
+        primeiro_um_encontrado = False
+        for i in str_bin_N:
+            if i == '1':
+                if primeiro_um_encontrado:
+                    if atual_binary_gap > max_binary_gap:
+                        max_binary_gap = atual_binary_gap
+                    atual_binary_gap = 0
+                else:
+                    primeiro_um_encontrado = True
+            else:
+                if primeiro_um_encontrado:
+                    atual_binary_gap +=1
+        return max_binary_gap
     else:
-        max_gap = max(gaps, key=len)
-        return len(max_gap)
 
-assert solution(1041) == 5
+        print(f'O parametro deve ser inteiro e não {type(N)}')
+
+
+print(f'BinaryGap = {solution(12147483647)}')
