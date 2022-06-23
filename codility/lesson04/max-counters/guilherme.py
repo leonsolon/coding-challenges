@@ -1,81 +1,73 @@
-def solution(N, A):
-    '''
-        You are given N counters, initially set to 0, and you have two possible operations on them:
+'''
+    You are given N counters, initially set to 0, and you have two possible operations on them:
 
-        increase(X) − counter X is increased by 1,
-        max counter − all counters are set to the maximum value of any counter.
-        A non-empty array A of M integers is given. This array represents consecutive operations:
+    increase(X) − counter X is increased by 1,
+    max counter − all counters are set to the maximum value of any counter.
+    A non-empty array A of M integers is given. This array represents consecutive operations:
 
-        if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X),
-        if A[K] = N + 1 then operation K is max counter.
-        For example, given integer N = 5 and array A such that:
+    if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X),
+    if A[K] = N + 1 then operation K is max counter.
+    For example, given integer N = 5 and array A such that:
 
-            A[0] = 3
-            A[1] = 4
-            A[2] = 4
-            A[3] = 6
-            A[4] = 1
-            A[5] = 4
-            A[6] = 4
-        the values of the counters after each consecutive operation will be:
+        A[0] = 3
+        A[1] = 4
+        A[2] = 4
+        A[3] = 6
+        A[4] = 1
+        A[5] = 4
+        A[6] = 4
+    the values of the counters after each consecutive operation will be:
 
-            (0, 0, 1, 0, 0)
-            (0, 0, 1, 1, 0)
-            (0, 0, 1, 2, 0)
-            (2, 2, 2, 2, 2)
-            (3, 2, 2, 2, 2)
-            (3, 2, 2, 3, 2)
-            (3, 2, 2, 4, 2)
-        The goal is to calculate the value of every counter after all operations.
+        (0, 0, 1, 0, 0)
+        (0, 0, 1, 1, 0)
+        (0, 0, 1, 2, 0)
+        (2, 2, 2, 2, 2)
+        (3, 2, 2, 2, 2)
+        (3, 2, 2, 3, 2)
+        (3, 2, 2, 4, 2)
+    The goal is to calculate the value of every counter after all operations.
 
-        Write a function:
+    Write a function:
 
-        def solution(N, A)
+    def solution(N, A)
 
-        that, given an integer N and a non-empty array A consisting of M integers, returns a sequence of integers representing the values of the counters.
+    that, given an integer N and a non-empty array A consisting of M integers, returns a sequence of integers representing the values of the counters.
 
-        Result array should be returned as an array of integers.
+    Result array should be returned as an array of integers.
 
-        For example, given:
+    For example, given:
 
-            A[0] = 3
-            A[1] = 4
-            A[2] = 4
-            A[3] = 6
-            A[4] = 1
-            A[5] = 4
-            A[6] = 4
-        the function should return [3, 2, 2, 4, 2], as explained above.
+        A[0] = 3
+        A[1] = 4
+        A[2] = 4
+        A[3] = 6
+        A[4] = 1
+        A[5] = 4
+        A[6] = 4
+    the function should return [3, 2, 2, 4, 2], as explained above.
 
-        Write an efficient algorithm for the following assumptions:
+    Write an efficient algorithm for the following assumptions:
 
-        N and M are integers within the range [1..100,000];
-        each element of array A is an integer within the range [1..N + 1].
-    '''
+    N and M are integers within the range [1..100,000];
+    each element of array A is an integer within the range [1..N + 1].
+'''
+from collections import Counter
+
+def solution(N, A=[]): # O(N + M) - 100% em Correctness - 100% em Performance
     # write your code in Python 3.6
     sub_A = []
-    split_A = []
-    counter = 0
+    max_counter = 0
     for a in A:
-        if a == N +1:
-            split_A.append(sub_A)
-            sub_A = []
+        if a == N + 1:
+            if len(sub_A) > 0:
+                count_sub_A = Counter(sub_A)
+                max_counter += max(count_sub_A.items(), key=lambda x: x[1])[1]
+                sub_A = []
         else:
             sub_A.append(a)
     else:
-        split_A.append(sub_A)
+        max_counter_list = [max_counter] * N
+        for a in sub_A:
+            max_counter_list[a - 1] += 1
 
-    for sub_A in split_A[:-1]:
-        max = 0
-        for n in set(sub_A):
-            qtd_n = sub_A.count(n)
-            if qtd_n > max:
-                max = qtd_n
-        counter += max
-
-    retorno = [counter]*N
-
-    for n in set(split_A[-1]):
-        retorno[n-1] += split_A[-1].count(n)
-
-    return retorno
+    return max_counter_list

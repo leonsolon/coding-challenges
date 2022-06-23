@@ -28,5 +28,5 @@ def solution(A):
         return 1
     else:
         sum_A = sum(A)
-        sum_trail = (1+len(A)+1)*(len(A)+1)/2
-    return int(sum_trail-sum_A)
+        sum_PA = (1+len(A)+1)*(len(A)+1)/2
+    return int(sum_PA-sum_A)

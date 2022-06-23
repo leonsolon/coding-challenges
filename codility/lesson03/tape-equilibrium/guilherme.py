@@ -1,54 +1,54 @@
-def solution(A):
-    '''
-        A non-empty array A consisting of N integers is given. Array A represents numbers on a tape.
+'''
+    A non-empty array A consisting of N integers is given. Array A represents numbers on a tape.
 
-        Any integer P, such that 0 < P < N, splits this tape into two non-empty parts: A[0], A[1], ..., A[P − 1] and A[P], A[P + 1], ..., A[N − 1].
+    Any integer P, such that 0 < P < N, splits this tape into two non-empty parts: A[0], A[1], ..., A[P − 1] and A[P], A[P + 1], ..., A[N − 1].
 
-        The difference between the two parts is the value of: |(A[0] + A[1] + ... + A[P − 1]) − (A[P] + A[P + 1] + ... + A[N − 1])|
+    The difference between the two parts is the value of: |(A[0] + A[1] + ... + A[P − 1]) − (A[P] + A[P + 1] + ... + A[N − 1])|
 
-        In other words, it is the absolute difference between the sum of the first part and the sum of the second part.
+    In other words, it is the absolute difference between the sum of the first part and the sum of the second part.
 
-        For example, consider array A such that:
+    For example, consider array A such that:
 
-          A[0] = 3
-          A[1] = 1
-          A[2] = 2
-          A[3] = 4
-          A[4] = 3
-        We can split this tape in four places:
+      A[0] = 3
+      A[1] = 1
+      A[2] = 2
+      A[3] = 4
+      A[4] = 3
+    We can split this tape in four places:
 
-        P = 1, difference = |3 − 10| = 7
-        P = 2, difference = |4 − 9| = 5
-        P = 3, difference = |6 − 7| = 1
-        P = 4, difference = |10 − 3| = 7
-        Write a function:
+    P = 1, difference = |3 − 10| = 7
+    P = 2, difference = |4 − 9| = 5
+    P = 3, difference = |6 − 7| = 1
+    P = 4, difference = |10 − 3| = 7
+    Write a function:
 
-        def solution(A)
+    def solution(A)
 
-        that, given a non-empty array A of N integers, returns the minimal difference that can be achieved.
+    that, given a non-empty array A of N integers, returns the minimal difference that can be achieved.
 
-        For example, given:
+    For example, given:
 
-          A[0] = 3
-          A[1] = 1
-          A[2] = 2
-          A[3] = 4
-          A[4] = 3
-        the function should return 1, as explained above.
+      A[0] = 3
+      A[1] = 1
+      A[2] = 2
+      A[3] = 4
+      A[4] = 3
+    the function should return 1, as explained above.
 
-        Write an efficient algorithm for the following assumptions:
+    Write an efficient algorithm for the following assumptions:
 
-        N is an integer within the range [2..100,000];
-        each element of array A is an integer within the range [−1,000..1,000].
-    '''
-    soma_A = sum(A)
-    soma = 0
-    min_dif = 0
-    for i in range(0,len(A)-1):
-        soma += A[i]
-        dif = abs(soma_A - 2*soma)
-        if i==0 or dif<min_dif:
-            min_dif = dif
-        if min_dif == 0:
-            return min_dif
-    return min_dif
+    N is an integer within the range [2..100,000];
+    each element of array A is an integer within the range [−1,000..1,000].
+'''
+
+def solution(A=[]):
+    sum_A = sum(A)
+    current_sum = 0
+    min_diff = float('inf')
+    for i, a in enumerate(A):
+        if i == len(A) - 1:
+            break
+        current_sum += a
+        diff = abs(2 * current_sum - sum_A)
+        min_diff = min(diff, min_diff)
+    return min_diff
