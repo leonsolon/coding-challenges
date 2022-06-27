@@ -9,5 +9,5 @@ def solution(N, A):
       max_counter.add(counter[element-1])
     if element == N+1 and len(max_counter) > 0: #teste do tamanho do max_counter: se o elemento N+1 estiver na primeira posição
       counter = [max(max_counter)]*N
-      max_counter.clear() #necessário limpar o contador para fins de performance
+      max_counter.clear() #necessário limpar o contador para fins de performance, caso contrário, o resultado seria 88%
   return counter
