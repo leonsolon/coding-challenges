@@ -12,6 +12,6 @@ def solution(A):
   set_test = set(range(1, last+1))
   difference = list(set_test.difference(set_B))
   if len(set_B) == len(set_test):
-    return min(list(set_test.difference(set_B)))
-  else:
     return last
+  else:
+    return min(list(set_test.difference(set_B)))
