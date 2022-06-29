@@ -1,35 +1,34 @@
-def solution(A):
+def solution(A=[]):
     # write your code in Python 3.6
-    min_values = []
-    max_values = []
+    A.sort()
+    len_A = len(A)
+    min_A = min(A)
+    max_A = max(A)
+    if len_A == 3:
+        return A[0] * A[1] * A[2]
 
-    if min(A) * max(A) > 0:
-        product = 1
-        for i in range(0, 3):
-            max_A = max(A)
-            index_max = A.index(max_A)
-            product *= A.pop(index_max)
+    if min_A >= 0 or max_A <= 0:
+        return A[-1] * A[-2] * A[-3]
+
+    negatives = []
+    for i in range(0, 3):
+        if A[i] < 0:
+            negatives.append(A[i])
+
+    positives = []
+    for i in range(1, 4):
+        if A[-i] > 0:
+            positives.append(A[-i])
+
+    max_product = -float('inf')
+
+    if len(negatives) <= 1:
+        max_product = positives[0] * positives[1] * positives[2]
     else:
-        for i in range(0,3):
-            if len(A) > 0:
-                max_A = max(A)
-                if max_A >= 0:
-                    index_max = A.index(max_A)
-                    max_values.append(A.pop(index_max))
-            if len(A) >0:
-                min_A = min(A)
-                if min_A < 0:
-                    index_min = A.index(min_A)
-                    min_values.append(A.pop(index_min))
+        if len(positives) >= 3:
+            max_product = max(positives[0] * positives[1] * positives[2], max_product)
 
-        len_max_values = len(max_values)
-        len_min_values = len(min_values)
-        if len_max_values >= 3 and len_min_values >= 2:
-            product_max = max_values[0] * max_values[1] * max_values[2]
-            product_min = min_values[0] * min_values[1] * max_values[0]
-            product = max(product_min, product_max)
-        elif len_max_values >= 3:
-            product = max_values[0] * max_values[1] * max_values[2]
-        elif len_min_values >= 2 and len_max_values >= 1:
-            product = min_values[0] * min_values[1] * max_values[0]
-    return product
+        if len(negatives) >= 2:
+            max_product = max(positives[0] * negatives[0] * negatives[1], max_product)
+
+    return max_product

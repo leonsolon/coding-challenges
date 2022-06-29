@@ -1,14 +1,15 @@
-def solution(S, P, Q): # O(N**2) - 100% em Correctness - 100% em Performance
-    retorno = []
-    for i,p in enumerate(P):
-        usefull_S = S[p:Q[i]+1]
+def solution(S, P, Q):
+    # write your code in Python 3.6
 
-        if 'A' in usefull_S:
-            retorno.append(1)
-        elif 'C' in usefull_S:
-            retorno.append(2)
-        elif 'G' in usefull_S:
-            retorno.append(3)
-        else:
-            retorno.append(4)
-    return retorno
+    answers =[]
+    for i, (p,q) in enumerate(zip(P,Q)):
+        slice = S[p:q+1]
+        if 'A' in slice:
+            answers.append(1)
+        elif 'C' in slice:
+            answers.append(2)
+        elif 'G' in slice:
+            answers.append(3)
+        elif 'T' in slice:
+            answers.append(4)
+    return answers

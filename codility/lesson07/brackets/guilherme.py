@@ -1,32 +1,32 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
 def solution(S):
+    # write your code in Python 3.6
     len_S = len(S)
-    if len_S == 0:
+    if len_S < 1:
         return 1
-    if len_S %2 ==1:
+    if len_S % 2 != 0:
         return 0
 
-    open_list = ''
+    open_carac = ''
 
-    for s in S:
-        if s in '{[(':
-            open_list+= s
-            open_list.join()
+    for i, s in enumerate(S):
+        if s in '([{':
+            open_carac += s
         else:
-            close = s
-
-            if len(open_list) <= 0:
+            if len(open_carac) <= 0:
                 return 0
             else:
-                open = open_list[-1]
+                if s == ')' and open_carac[-1] != '(':
+                    return 0
+                if s == ']' and open_carac[-1] != '[':
+                    return 0
+                if s == '}' and open_carac[-1] != '{':
+                    return 0
+                open_carac = open_carac[:-1]
 
-            if open == '(' and close != ')':
-                return 0
-            elif open == '[' and close != ']':
-                return 0
-            elif open == '{' and close != '}':
-                return 0
-            else:
-                open_list = open_list[0:-1]
-    if len(open_list) > 0:
+    if len(open_carac) > 0:
         return 0
-    return 1
+    else:
+        return 1
