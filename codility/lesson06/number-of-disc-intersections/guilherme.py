@@ -1,57 +1,41 @@
-def solution(A):# O(N**2) - 100% em Correctness - 100% em Performance
-    # write your code in Python 3.6
-    starts = []
-    ends = []
-    info_points = []
-    set_points = set()
-    intesections = 0
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    if len(A) == 0:
+        return 0
+    starts = {}
+    ends = {}
+    pos = set()
     for i, a in enumerate(A):
-        set_points.add(i-a)
-        starts.append(i-a)
-        set_points.add(i+a)
-        ends.append(i+a)
+        start = i - a
+        end = i + a
+        pos.add(start)
+        pos.add(end)
+        if start in starts:
+            starts[start] += 1
+        else:
+            starts[start] = 1
 
-    starts.sort() #pontos onde os circulos se iniciam
-    ends.sort() #pontos onde os circulos terminam
-    set_points = sorted(set_points) #conjunto de pontos
+        if end in ends:
+            ends[end] += 1
+        else:
+            ends[end] = 1
 
-    pos_start = 0
-    pos_end = 0
-    for p in set_points:
-        count_start = 0
-        count_end = 0
-        # O while a seguir conta a quantidade de inicios de circulo no ponto p
-        # como o vetor com os inicios de circulo está ordenado, a verificação começa de onde parou.
-        while pos_start<len(starts) and starts[pos_start]<=p:
-            # print(f'p: {p} - starts[pos_start]:{starts[pos_start]} - pos_start: {pos_start}')
-            if p==starts[pos_start]:
-                count_start +=1
-            pos_start +=1
-        # O while a seguir conta a quantidade de terminos de circulo no ponto p
-        # como o vetor com os terminos de circulo está ordenado, a verificação começa de onde parou.
-        while pos_end<len(ends) and ends[pos_end]<=p:
+    # print(starts, ends)
 
-            if p==ends[pos_end]:
-                count_end +=1
-            pos_end +=1
-        info_points.append([p,count_start, count_end])
+    pos_list = list(pos)
+    pos_list.sort()
 
-    print(info_points)
+    open_disc = 0
+    intersecting_disc = 0
+    for i, p in enumerate(pos_list):
+        if p in starts:
+            intersecting_disc += (2 * open_disc + starts[p] - 1) * starts[p] / 2
+            if intersecting_disc > 10000000:
+                return -1
+            open_disc += starts[p]
+        if p in ends:
+            open_disc -= ends[p]
 
-    circulos_ativos = 0
-    for info in info_points:
-        #quando um circulo inicia ele faz interceção com todos os circulos ativos.
-        #quando dois ou mais circulos se inicial no memos ponto
-        # a quantidade de interseções a ser somada vai aumentos em 1
-        # sendo assim, tempos uma PA onde:
-        # a(i) = circulos ativos;
-        # a(n) = circulos ativos + circulos iniciados no ponto-1;
-        # n = circulos iniciados; com isso, a
-        # Soma = circulos iniciados*(circulos ativos + circulos ativos + circulos iniciados - 1)/2
-        # Soma = circulos iniciados*(2*circulos ativos + circulos iniciados - 1)/2
-        intesections += info[1]*(2*circulos_ativos + info[1] - 1)/2
-        if intesections > 10000000:
-            return -1
-        circulos_ativos += info[1] - info[2]
-
-    return int(intesections)
+    return int(intersecting_disc)
