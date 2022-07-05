@@ -30,6 +30,7 @@ def solution(A): # ??? - 100% em Correctness - 40% em Performance
         current_block = 0
         number_elements = len_A / blocks
         peaked_blocks = set()
+
         while True:
             start = current_block*number_elements
             end = (current_block+1)*number_elements

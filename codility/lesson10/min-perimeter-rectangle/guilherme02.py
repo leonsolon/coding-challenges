@@ -1,38 +1,32 @@
-def get_primes(N):
-    primes = set([2])
-
-    for i in range(2, N + 1):
-        is_prime = True
-        j = 2
-        while j**2 <= i:
-            if i % j == 0:
-                is_prime = False
-                break
-            j +=1
-        if is_prime:
-            primes.add(i)
-    return (primes)
-
-
 def solution(N): # O(sqrt(N)) - 100% em Correctness - 60% em Performance
+    prime_list =[]
 
-    prime_factors = [1]
-    primes = get_primes(N)
-    for prime in primes:
-        while N % prime==0:
-            prime_factors.append(prime)
-            N = N/prime
+    original_N = N
 
+    i=2
+    add = 1
+    while i <= N:
+        count = 0
+        prime = False
+        while N % i ==0:
+            if not prime:
+                prime = True
+            count += 1
+            N = N/i
+            prime_list.append(i)
+
+        if i == 3:
+            add = 2
+        i += add
 
     factors = set([1])
-    for i, prime in enumerate(prime_factors):
+    for i, prime in enumerate(prime_list):
         for factor in factors.copy():
                 factors.add(factor*prime)
 
 
     factors_list = list(factors)
     factors_list.sort()
-
     # print(factors_list)
 
     len_factor_list = len(factors_list)
@@ -41,6 +35,11 @@ def solution(N): # O(sqrt(N)) - 100% em Correctness - 60% em Performance
     else:
         min_perimeter = 4 * (factors_list[len_factor_list // 2])
 
-    return min_perimeter
+    # min_perimeter = float('inf')
+    # for a in factors_list:
+    #     perimeter = 2*(a + original_N/a)
+    #     if perimeter < min_perimeter:
+    #         min_perimeter = perimeter
+    return int(min_perimeter)
 
 print(solution(36))

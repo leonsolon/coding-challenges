@@ -1,25 +1,17 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
 def solution(A):
-    # write your code in Python 3.6
-    len_A = len(A)
-
-    if len_A < 2:
+    if len(A)==0:
         return 0
-
-    min_A = min(A)
-    max_A = max(A)
-    profit = 0
+    min_value = float('inf')
     max_profit = 0
-    actual_min = float('inf')
+    max_max_profit = max(A) - min(A)
+    for i, a in enumerate(A):
+        min_value = min(min_value,a)
+        profit = a - min_value
+        max_profit = max(max_profit,profit)
+        if max_profit >= max_max_profit:
+            return max_profit
 
-    for a in A:
-        if a < actual_min:
-            actual_min = a
-
-        profit = a - actual_min
-        if profit > max_profit:
-            max_profit = profit
-            if max_profit == max_A - min_A:
-                return int(max_profit)
     return max_profit
-
-print(solution([23171, 21011, 21123, 21366, 21013, 21367]))

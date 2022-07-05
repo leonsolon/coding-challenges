@@ -11,7 +11,7 @@ def get_factors(N, limit):
     return set_factors
 
 
-def solution(A): # ??? - 100% em Correctness - 100% em Performance
+def solution(A): # O(N * log(log(N))) - 100% em Correctness - 100% em Performance
     # write your code in Python 3.6
     len_A = len(A)
     if len_A <=2:

@@ -1,64 +1,59 @@
-def solution(A): # ??? - 100% em Correctness - 40% em Performance
-    # write your code in Python 3.6
+def get_peaks(A):
     len_A = len(A)
-    if len_A <=2:
-        return 0
-    peak_set = set()
+    peaks = []
     for i, a in enumerate(A):
-        if i > 0 and i < len_A -1 and a > A[i-1] and a > A[i+1]:
-            peak_set.add(i)
+        if i == 0 or i == len_A - 1:
+            pass
+        else:
+            if a > A[i - 1] and a > A[i + 1]:
+                peaks.append(i)
+    return peaks
 
-    peak_list = list(peak_set)
-    peak_list.sort()
 
-    # print(peak_list)
+def get_factors(N, max_factor):
+    i = 1
+    sqr_N = N ** (1 / 2)
+    factors = []
+    while i <= sqr_N and i <= max_factor:
+        if N % i == 0:
+            if i <= max_factor:
+                factors.append(i)
+            if N / i <= max_factor:
+                factors.append(int(N / i))
 
-    len_peak_list = len(peak_list)
-    blocks = len(peak_list)
-    if blocks == 0:
+        i += 1
+    return factors
+
+
+def solution(A): # O(N * log(log(N))) - 100% em Correctness - 100% em Performance
+    # write your code in Python 3.6
+    # print(A)
+    len_A = len(A)
+    if min(A) == max(A):
         return 0
 
+    if len_A <= 2:
+        return 0
 
+    peaks = get_peaks(A)
+    # print(peaks)
+    len_peaks = len(peaks)
+    if len_peaks == 0:
+        return 0
 
-    while True:
-        while len_A % blocks != 0:
-            blocks -= 1
-            if blocks <= 1:
-                return blocks
+    factors = get_factors(len_A, len_peaks)
+    # print(len_A,len_peaks)
+    factors.sort(reverse=True)
+    # print(factors)
 
-        i = 0
-        current_block = 0
-        number_elements = len_A / blocks
-        peaked_blocks = set()
-        while True:
-            start = current_block*number_elements
-            end = (current_block+1)*number_elements
-            if peak_list[i] >= start and peak_list[i] < end:
-                peaked_blocks.add(current_block)
-                if len(peaked_blocks) == blocks:
-                    return blocks
-                current_block += 1
-
-            i +=1
-
-            if i >= len_peak_list:
-                blocks -= 1
-                if blocks<= 0:
-                    return 0
-                i =0
-                current_block = 0
-                peaked_blocks = set()
+    for i, factor in enumerate(factors):
+        peaked_block = 0
+        size_block = len_A / factor
+        for peak in peaks:
+            # print(peak, peaked_block*size_block, (peaked_block+1)*size_block)
+            if peak >= peaked_block * size_block and peak < (peaked_block + 1) * size_block:
+                peaked_block += 1
+                if peaked_block == factor:
+                    return int(factor)
 
     return 0
-
-assert solution([1, 2, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2,4, 1, 2, 3, 4, 6, 2]) == 1
-assert solution([1, 2, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2]) == 3
-assert solution([1]) == 0
-assert solution([1,2]) == 0
-assert solution([1,2,1]) == 1
-assert solution([1,2,3]) == 0
-assert solution([1,2,3,2]) == 1
-assert solution([1,2,1,1,2,1]) == 2
-assert solution([1,2,1,1,1,2,1]) == 1
-assert solution([1,2,1,2,1,2,1,1,1]) == 2
-
