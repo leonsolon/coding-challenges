@@ -45,6 +45,25 @@ def solution(A):
         max_profit = max(lucro, max_profit)
     return max_profit
 
+# PONTEIRO OU ÂNCORA DA JANELA É SETADO NO LADO ESQUERDO DA ARRAY (INÍCIO). NO CASO, BUY_PRICE.
+
+'''
+TOTAL SCORE - 100%
+'''
+
+# OUTRA FORMA:
+
+def solution(A):
+    if sorted(A, reverse = True) == A:
+        return 0
+    max_lucro = 0
+    buy_price = A[0]
+    for price in A:
+        buy_price = min(price, buy_price)
+        lucro = price - buy_price
+        max_lucro = max(lucro, max_lucro)
+    return max_lucro
+
 '''
 TOTAL SCORE - 100%
 '''
