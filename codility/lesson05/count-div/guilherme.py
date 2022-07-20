@@ -4,5 +4,5 @@ from math import ceil, floor
 
 def solution(A, B, K):
     first = ceil(A/K)
-    last = floor(B//K)
+    last = floor(B/K)
     return last-first+1
