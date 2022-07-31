@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+
 # Author: Cleyton Pires (https://github.com/cleytonap)
 # Date: 20-jun-2022
 # Description: Code challenge from Lesson 4.4 (MissingIntegers) of Codility
