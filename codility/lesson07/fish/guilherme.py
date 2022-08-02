@@ -1,34 +1,33 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
 def solution(A, B): # O(N) - 100% em Correctness - 100% em Performance
-    # write your code in Python 3.6
-    eating = False
-    alive = len(A)
-    fish_rigth = []
-    for i, fish in enumerate(B):
-        if fish == 1:
-            fish_rigth.append(A[i])
-            eating = True
+    i = 0
+    alive_fish = 0
+    while i < len(B) and B[i] == 0:
+        i += 1
+        alive_fish += 1
 
-        elif eating:
-            count_eated = 0
-            while len(fish_rigth) > count_eated and fish_rigth[-1-count_eated] < A[i]:
-                count_eated += 1
-            if count_eated >0:
-                fish_rigth = fish_rigth[0:-count_eated]
+    j = len(B) - 1
+    while j >= 0 and B[j] == 1:
+        j -= 1
+        alive_fish += 1
 
-                alive -= count_eated
+    A = A[i:j + 1]
+    B = B[i:j + 1]
 
-            if len(fish_rigth)<=0:
-                eating = False
+    ones = []
+    for i, (a, b) in enumerate(zip(A, B)):
+        if b == 1:
+            ones.append(a)
+        else:
+            if len(ones) > 0 and ones[-1] > a:
+                continue
             else:
-                if fish_rigth[-1] > A[i]:
-                    alive -= 1
-    return alive
+                while len(ones) > 0 and a > ones[-1]:
+                    ones.pop()
+                if len(ones) == 0:
+                    alive_fish += 1
 
-print(solution([8, 3, 6, 7, 5], [1, 0, 1, 0, 0]))
-
-# print(solution([8, 3, 6, 7, 5], [1, 0, 1, 0, 0]))
-# print(solution([7, 3, 6, 1, 5], [1, 0, 0, 0, 0]))
-# print(solution([4, 3, 6, 1, 5], [1, 1, 1, 1, 1]))
-# print(solution([4, 3, 6, 1, 5], [0, 0, 0, 0, 0]))
-# print(solution([4, 3, 6, 1, 5], [0, 1, 0, 0, 0]))
-print(solution([4, 3, 2, 1, 5], [0, 1, 0, 0, 0]))
+    alive_fish += len(ones)
+    return alive_fish
