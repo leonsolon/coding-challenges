@@ -1,8 +1,7 @@
-# Não passa em 4 testes por performance
 def sumXor(n):
-    # Write your code here
-    count =0
-    for x in range(0,n+1):
-        if x+n == x^n:
-            count+=1
-    return count
+    if n == 0:
+        return 1
+    else:
+        bin_n = bin(n)[2:]
+        zeros_in_bin_n = bin_n.count('0')
+        return 2**zeros_in_bin_n

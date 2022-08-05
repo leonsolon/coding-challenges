@@ -50,10 +50,11 @@ Sample Explanation 0
 
 The string lacks an x.
 '''
+import string
 def pangrams(s):
-    alphabet = set('abcdefghijklmnopqrstuvwxyz')
     set_s = set(s.lower())
-    if alphabet.issubset(set_s):
+    alphabet_set = set(string.ascii_lowercase)
+    if set_s.issuperset(alphabet_set):
         return 'pangram'
     else:
         return 'not pangram'

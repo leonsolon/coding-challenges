@@ -1,19 +1,20 @@
+import string
+
+
 def caesarCipher(s, k):
     # Write your code here
-    original_alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    rotate = k % len(original_alphabet)
-    print(rotate)
-    rotate_alphabet = original_alphabet[rotate:] + original_alphabet[:rotate]
-    s_cipher = ''
-    print(original_alphabet)
-    print(rotate_alphabet)
-    for i, letter in enumerate(s):
 
-        if letter in original_alphabet:
-            s_cipher = s_cipher + rotate_alphabet[original_alphabet.index(letter)]
-
-        elif letter in original_alphabet.upper():
-            s_cipher = s_cipher + rotate_alphabet[original_alphabet.index(letter.lower())].upper()
+    alphabet = string.ascii_lowercase
+    rotate = k % len(alphabet)
+    alphabet_cipher = alphabet[rotate:] + alphabet[:rotate]
+    new_s = ''
+    for caract in s:
+        if caract.lower() in alphabet:
+            idx = alphabet.index(caract.lower())
+            new_caract = alphabet_cipher[idx]
+            if caract == caract.upper():
+                new_caract = new_caract.upper()
         else:
-            s_cipher = s_cipher + letter
-    return s_cipher
+            new_caract = caract
+        new_s += new_caract
+    return new_s
