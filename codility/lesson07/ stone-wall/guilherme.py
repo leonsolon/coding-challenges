@@ -3,16 +3,16 @@
 
 def solution(H=[]):
     blocks = []
-    cuted_blocks = 0
+    cutted_blocks = 0
     for i,h in enumerate(H):
         if len(blocks)==0 or (len(blocks)>0 and h>blocks[-1]):
             blocks.append(h)
         elif len(blocks)>0 and h < blocks[-1]:
             while len(blocks)>0 and h < blocks[-1]:
-                cuted_blocks += 1
+                cutted_blocks += 1
                 blocks.pop()
             if len(blocks)==0 or h != blocks[-1]:
                 blocks.append(h)
 
-    cuted_blocks += len(blocks)
-    return cuted_blocks
+    cutted_blocks += len(blocks)
+    return cutted_blocks
