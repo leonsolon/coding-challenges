@@ -58,6 +58,7 @@ N is an integer within the range [1..400,000];
 each element of array A is an integer within the range [0..1,000,000,000].
 '''
 
+
 def solution(A):
     peaks = []
     for i, el in enumerate(A):
@@ -71,18 +72,16 @@ def solution(A):
         return 1
     if len(peaks) == 2:
         return 2
-    maxflags = len(peaks)
+    maxflags = int((peaks[-1] - peaks[0])**0.5 + 1)
     for tentativa in range (maxflags, 2, -1):
-        placed = 0
-        last_used_peak = -1
-        for index, peak in enumerate(peaks): #SÓ CONSEGUI FAZER POR ESSE CAMINHO OLHANDO A SOLUÇÃO DO GUILHERME. NÃO ENTENDI ESSA ÚLTIMA PARTE.
-            if index == 0 or ((peak - last_used_peak) >= tentativa):
-                last_used_peak = peak
-                placed += 1
-                if placed == tentativa:
-                    return tentativa
-                if (tentativa - placed) * tentativa > peaks[-1] - index:
-                    break
+        used_peaks = []
+        for index, peak in enumerate(peaks): 
+            if index == 0:
+                used_peaks.append(peak)
+            if peak - used_peaks[-1] >= tentativa:
+                used_peaks.append(peak)
+            if len(used_peaks) == tentativa:
+                return tentativa
     
             
 
