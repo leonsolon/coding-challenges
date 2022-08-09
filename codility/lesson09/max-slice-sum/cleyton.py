@@ -1,4 +1,3 @@
-
 #------------------------------------------------------------------------------
 # Author: Cleyton Pires (https://github.com/cleytonap)
 # Date: 18-jun-2022
@@ -6,6 +5,12 @@
 # https://app.codility.com/programmers/
 # TOTAL SCORE: 100%
 #------------------------------------------------------------------------------
+
+
+#LESSON LEARNED: Kadane’s Algorithm is an iterative dynamic programming algorithm. 
+# It calculates the maximum sum subarray ending at a particular position by using 
+# the maximum sum subarray ending at the previous position.
+
 
 """ A non-empty array A consisting of N integers is given. A pair of integers (P, Q), such that 0 ≤ P ≤ Q < N, is called a slice of array A. The sum of a slice (P, Q) is the total of A[P] + A[P+1] + ... + A[Q].
 
@@ -33,14 +38,11 @@ the result will be an integer within the range [−2,147,483,648..2,147,483,647]
  """
 def solution(A):
     
-    max_ending = max_slice = A[0]
-    for i in range(1, len(A)):
-        a = A[i]
-        max_ending = max(a, max_ending + a)
-        max_slice = max(max_slice, max_ending)
-    return max_slice
+    local_max = 0
+    global_max = float('-inf')
 
+    for a in A:
+        local_max = max(local_max + a, a)
+        global_max = max(global_max, local_max)
 
-print(solution([3,2,-6,4,0,3]))
-print(solution([-3,-2,-6,-4])) # -2
-print(solution([3,2,-6,4,0])) # 5
+    return global_max

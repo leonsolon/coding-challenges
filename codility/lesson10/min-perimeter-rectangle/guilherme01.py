@@ -2,12 +2,13 @@
 # print("this is a debug message")
 def get_factors(N):
     i=1
+    sqrt_N = N**(1/2)
     factors = set()
-    while i*i <= N:
+    while i <= sqrt_N:
         if N % i ==0:
             factors.add(i)
-            factors.add(N/i)
-        i+=1
+            factors.add(int(N/i))
+        i += 1
     return factors
 
 
