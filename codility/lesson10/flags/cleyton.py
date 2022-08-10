@@ -12,8 +12,7 @@
 
         # If we know that x flags can be set, then we also know that
         # x−1, x−2, . . . , 1 flags can be set. Otherwise, if x flags cannot be set, then x+1, x+2, . . . , √
-        # N
-        # flags cannot be set either
+        # N flags cannot be set either
 
 
 """ A non-empty array A consisting of N integers is given.
@@ -77,23 +76,25 @@ N is an integer within the range [1..400,000];
 each element of array A is an integer within the range [0..1,000,000,000]. """
 
 
-def checkFlag(peaks, x): #constraints: len(peaks) >= 2. Peaks is sorted in ascending order.
 
-    flags = x - 1 #Always put a flag in the first peak
-    prevPeak = peaks[0]
-    for i in range(1, len(peaks)):
-        if x <= peaks[i] - prevPeak:
-            flags -= 1
-            prevPeak = peaks[i]
-            if flags == 0:
-                return True
-    return False
 
 def solution(A): 
+
+    #Auxiliary function
+    def checkFlag(peaks, x): #constraints: len(peaks) >= 2. Peaks is sorted in ascending order.
+        flags = x - 1 #Always put a flag in the first peak
+        prevPeak = peaks[0]
+        for i in range(1, len(peaks)):
+            if x <= peaks[i] - prevPeak:
+                flags -= 1
+                prevPeak = peaks[i]
+                if flags == 0:
+                    return True
+        return False
+    
+    #Find peaks
     N = len(A)
     peaks = []
-
-    #Find peaks
     for i in range(1, N -1):
         if (A[i-1] < A[i] > A[i+1]):
             peaks.append(i)
@@ -102,17 +103,19 @@ def solution(A):
     numPeaks = len(peaks)
     if numPeaks == 0 or numPeaks == 1: return numPeaks
 
-    flags = [i for i in range(2, numPeaks + 1)]
-
     #Binary search:
-    while len(flags) > 1:
-        x = len(flags) // 2
-        if checkFlag(peaks, flags[x]):
-            flags = flags[x:] #It is possible to improve performance by avoiding list slices!
+    begin = 2
+    end = numPeaks
+    maxFlags = 2
+    while end - begin >= 0:
+        mid = (end - begin) // 2 + begin 
+        if checkFlag(peaks, mid):
+            begin = mid + 1
+            maxFlags = mid
         else:
-            flags = flags[:x]
+            end = mid - 1
 
-    return flags[0]
+    return maxFlags  
     
 
 
@@ -123,10 +126,3 @@ assert(solution([1, 3]) == 0)
 assert(solution([1, 3, 1]) == 1)
 assert(solution([3, 3, 1]) == 0)
 assert(solution([1,5,3,4,3,4,1,2,3,4,6,2]) == 3)
-
-#assert(solution([1,5,3,4,3,4,1,2,3,4,6,2]*10000) == 345) # ????
-
-# import timeit
-# #assert(solution([1,5,3,4,3,4,1,2,3,4,6,2]*10000) == 345) # ????
-# print(timeit.timeit(lambda: solution([1,5,3,4,3,4,1,2,3,4,6,2]*4), number=1))
-# print(timeit.timeit(lambda: solution3([1,5,3,4,3,4,1,2,3,4,6,2]*4), number=1))
