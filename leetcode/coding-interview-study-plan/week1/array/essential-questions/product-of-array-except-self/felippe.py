@@ -7,10 +7,10 @@
 def productExceptSelf(nums):
     
     N = len(nums)
-    p_left = nums[0]
-    a_left = [1, nums[0]]
-    for i in range(0, N-2):
-      p_left = p_left * nums[i+1]
+    p_left = 1
+    a_left = [1]
+    for i in range(0, N-1):
+      p_left = p_left * nums[i]
       a_left.append(p_left)
 
     #print(a_left)
