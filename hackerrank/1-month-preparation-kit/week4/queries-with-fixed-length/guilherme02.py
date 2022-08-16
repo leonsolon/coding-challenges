@@ -1,4 +1,4 @@
-def solve(arr, queries):  # Falhou em 7 dos 11 casos por performance
+def solve(arr, queries):  # Falhou em 7 dos 12 casos por performance
     len_arr = len(arr)
 
     result = {}

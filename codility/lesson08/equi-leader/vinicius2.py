@@ -51,14 +51,14 @@ def solution(A):
             return 0
     from collections import Counter
     leader_freq = len(A) // 2
-    leader = 3_000_000_000
+    leader = float('inf')
     qt_equileaders = 0
     countdict = Counter(A)
     for number, count in countdict.items():
         if count > leader_freq:
             leader = number
             break
-    if leader == 3_000_000_000:
+    if leader == float('inf'):
         return 0
     else:
         arr = [0]*len(A)
