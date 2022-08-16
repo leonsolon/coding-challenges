@@ -1,20 +1,16 @@
-def hackerlandRadioTransmitters(x, k):
-    min_coverage = float('inf')
-    max_coverage = -float('inf')
-    count_transmitters = 0
-    x.sort()
-    len_x = len(x)
-    for i, el in enumerate(x):
-        if el >= min_coverage and el <= max_coverage:
-            pass
-        else:
-            j = 0
-            while (i + j) < len_x and el + k >= x[i + j]:
-                j += 1
-            j -= 1
-            min_coverage = x[i + j] - k
-            max_coverage = x[i + j] + k
-            count_transmitters += 1
-            print(i + j, j, min_coverage, max_coverage)
+from bisect import bisect
 
-    return count_transmitters
+def hackerlandRadioTransmitters(x, k):
+    x.sort()
+    start_signal = -1
+    end_signal = -1
+    transmitters = 0
+    for i, house in enumerate(x):
+        if not (house >= start_signal and house <= end_signal):
+            next_place_transmitter_idx = bisect(x, house + k) - 1
+
+            start_signal = x[next_place_transmitter_idx] - k
+            end_signal = x[next_place_transmitter_idx] + k
+            # print(next_place_transmitter_idx,x[next_place_transmitter_idx], start_signal, end_signal)
+            transmitters += 1
+    return transmitters

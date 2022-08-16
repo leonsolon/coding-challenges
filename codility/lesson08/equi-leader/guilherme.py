@@ -15,7 +15,7 @@ def solution(A=[]):
         if i== len_A-1:
             break
         len_left = i + 1
-        if count_A[a] < len_A/2:
+        if count_A[a] < len_left/2:
             if a in count_A_left:
                 count_A_left['outros'] += count_A_left.pop(a) + 1
             else:

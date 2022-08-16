@@ -2,7 +2,7 @@ def get_sum_slice(A):
     current_sum = 0
     sum_slices = []
     for i, a in enumerate(A):
-        current_sum = max(a, a + current_sum,0)
+        current_sum = max(a, a + current_sum, 0)
         sum_slices.append(current_sum)
     return sum_slices
 
