@@ -11,13 +11,13 @@ class Solution:
     def productExceptSelf(self, nums: list) -> list:
         N = len(nums)
         
-        A = [0] * N
+        A = [0 for _ in range(N)]
         temp = 1
         for i, num in enumerate(nums):
             A[i] = temp
             temp *= num
         
-        B = [0] * N
+        B = [0 for _ in range(N)]
         temp = 1
         for i, num in enumerate(nums[::-1]):
             B[N-i-1] = temp
@@ -25,8 +25,8 @@ class Solution:
         
         return [a*b for a, b in zip(A, B)]
 
-# Runtime: 371 ms, faster than 46.53% of Python3 online submissions for Product of Array Except Self.
-# Memory Usage: 22.5 MB, less than 14.61% of Python3 online submissions for Product of Array Except Self.
+# Runtime: 303 ms, faster than 70.72% of Python3 online submissions for Product of Array Except Self.
+# Memory Usage: 22.5 MB, less than 18.46% of Python3 online submissions for Product of Array Except Self.
 
 s = Solution()
 print(s.productExceptSelf([1,2,3,4]))
