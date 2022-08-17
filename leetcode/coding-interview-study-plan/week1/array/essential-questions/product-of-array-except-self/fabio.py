@@ -11,12 +11,14 @@ class Solution:
     def productExceptSelf(self, nums: list) -> list:
         N = len(nums)
         
-        A = [0 for _ in range(N)]
+        # Accumulated product from left to right
+        A = [0 for _ in range(len(nums))]
         temp = 1
         for i, num in enumerate(nums):
             A[i] = temp
             temp *= num
         
+        # Accumulated product from right to left
         B = [0 for _ in range(N)]
         temp = 1
         for i, num in enumerate(nums[::-1]):
