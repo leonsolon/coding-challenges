@@ -38,5 +38,4 @@ class Solution:
         from itertools import combinations
         return [list(i) for i in combinations(range(1,n+1),k)]
 
-
 # NÃO CONSEGUI FAZER COM RECURSÃO
