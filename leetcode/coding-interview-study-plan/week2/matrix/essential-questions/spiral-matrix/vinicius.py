@@ -33,7 +33,6 @@ class Solution:
         colunas = len(matrix[0])
         elements = linhas * colunas
         output = []
-        direcoes = ['r','d','l','u']
         direcao = 'r'
         while len(output) < elements:
             if direcao == 'r' and len(output) < elements:
