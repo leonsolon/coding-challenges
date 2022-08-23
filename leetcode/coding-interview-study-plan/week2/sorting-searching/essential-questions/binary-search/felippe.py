@@ -6,7 +6,7 @@
 
 def search(nums, target):
   
-  if len(nums) <= 2: # edge case
+  if len(nums) <= 3: # edge case
     if target in nums:
       return nums.index(target)
     else:
