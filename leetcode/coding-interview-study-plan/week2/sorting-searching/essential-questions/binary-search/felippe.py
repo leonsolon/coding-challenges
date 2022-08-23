@@ -18,7 +18,7 @@ def search(nums, target):
   
   while target != nums[middle]:
     
-    if last == first: # target not finded
+    if last <= first: # target not finded
       return -1
 
     if target < nums[middle]: # left side
