@@ -1,8 +1,8 @@
 # Week 2
 # Sorting and searching
 # Search in Rotated Sorted Array
-# Runtime: 46 ms, faster than 38.36% of Python online submissions for Search in Rotated Sorted Array.
-# Memory Usage: 13.7 MB, less than 39.46% of Python online submissions for Search in Rotated Sorted Array.
+# Runtime: 47 ms, faster than 35% of Python online submissions for Search in Rotated Sorted Array.
+# Memory Usage: 13.4 MB, less than 97.93% of Python online submissions for Search in Rotated Sorted Array.
 
 def search(nums, target):
         
@@ -42,7 +42,7 @@ def search(nums, target):
             return middle
         
         idx = 0
-        idx_list = list(range(len(nums)))
+       
         for i,e in enumerate(nums):
             if i == len(nums) - 1:
                 break
@@ -51,14 +51,17 @@ def search(nums, target):
                 break
   
         nums_sorted = nums[idx:] + nums[:idx]
-        idx_sorted = idx_list[idx:] + idx_list[:idx]
+       
         #print(nums_sorted)
         result = binsearch(nums_sorted, target)
         #print(result, idx)
         if result == -1:
             return -1
   
-        return idx_sorted[result]
+        if result + idx < len(nums):
+            return result + idx
+        else:
+            return result + idx - len(nums)
 
 
 assert search([4,5,6,7,0,1,2],0) == 4
