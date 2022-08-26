@@ -20,6 +20,8 @@ def solution(S):
                 return 0
             if close_list.index(element) == stack[-1]: # compara para ver se o tipo de bracket é o mesmo
                 stack.pop()
+            else:
+                return 0
     if len(stack) == 0:
         return 1
     else:
